@@ -40,14 +40,14 @@ namespace Nekomimi
         {
             lock (cbMUTEX)
             {
-                var tmp=Find(Object.Name(),Object.Type());
+                var tmp = Find(Object.Name(), Object.Type());
                 if (tmp != null)
                 {
                     // Object has the same name-type combination with an existing Concept
-                    // Hence there is a contradiction
+                    // Hence there is a direct contradiction
                     if (tmp != Object)
                     {
-                        Contradiction.Throw(new Concept[2] { Object, tmp });
+                        Contradiction.Throw(Contradiction.ERRCODE.DIRECT,new Concept[2] { Object, tmp });
                         return;
                     }
                 }
@@ -55,7 +55,7 @@ namespace Nekomimi
                 if (!mConcepts.Contains(Object))
                 {
                     mConcepts.Add(Object);
-                }               
+                }
             }
         }
 
@@ -94,7 +94,7 @@ namespace Nekomimi
             {
                 foreach (Concept c in mConcepts)
                 {
-                    if (c.Name() == Name && c.GetProperty("TYPE")==Type)
+                    if (c.Name() == Name && c.GetProperty("TYPE") == Type)
                     {
                         return c;
                     }
@@ -112,7 +112,7 @@ namespace Nekomimi
         /// <param name="Property">Property</param>
         /// <param name="Value">Value</param>
         /// <returns>A List containing all the matching Concept(s).</returns>
-        static public List<Concept> FindProp(string Property,string Value)
+        static public List<Concept> FindProp(string Property, string Value)
         {
             lock (cbMUTEX)
             {
@@ -127,6 +127,26 @@ namespace Nekomimi
 
                 return results;
             }
+        }
+
+        /// <summary>
+        /// Extract all Concept(s) that can be found in a string. Note that extraction is not parsing so it is non-exclusive and there may be overlapping. 
+        /// </summary>
+        /// <param name="Source">string to extract from</param>
+        /// <returns>A List of Concept(s) that is seen in Source</returns>
+        static public List<Concept> Extract(string Source)
+        {
+            List<Concept> results = new List<Concept>();
+
+            foreach (Concept c in mConcepts)
+            {
+                if (Source.Contains(c.Name()))
+                {
+                    results.Add(c);
+                }
+            }
+
+            return results;
         }
 
     }

@@ -10,12 +10,14 @@ namespace Nekomimi
     /// The idea of a "Concept" is similar to that of a class in programming languages. 
     /// A Concept has various properties with different values that can be read/written.
     /// It can be thought of as a meta-representation of a class.
+    /// It is a reference type object.
     /// </summary>
     class Concept
     {
 
         readonly string mName = "";
         Dictionary<string, string> mdictProperties = new Dictionary<string, string>();
+        Concept mParent = null;
 
         /// <summary>
         /// Creates a new concept.
@@ -24,6 +26,16 @@ namespace Nekomimi
         public Concept(string Name)
         {
             mName = Name;
+        }
+
+        /// <summary>
+        /// Creates a new concept.
+        /// </summary>
+        /// <param name="Name">The external name of the concept. External name is the term that is used to refer to this concept in the input.</param>
+        /// <param name="Parent">Parent Concept to inherit from</param>
+        public Concept(string Name,Concept Parent)
+        {
+            mParent = Parent;
         }
 
         public string Name()
@@ -39,6 +51,11 @@ namespace Nekomimi
                 return type;
             }
             return "NONE";
+        }
+
+        public Concept GetParent()
+        {
+            return mParent;
         }
 
         // Equalities
@@ -99,6 +116,10 @@ namespace Nekomimi
             {
                 return mdictProperties[Field];
             }
+            else if (mParent != null)
+            {
+                return mParent.GetProperty(Field);
+            }
             return null;
         }
         
@@ -109,6 +130,12 @@ namespace Nekomimi
         /// <param name="Value">Value</param>
         public void SetProperty(string Field,string Value)
         {
+            if (mParent.GetProperty(Field) != Value)
+            {
+                Contradiction.Throw(Contradiction.ERRCODE.INHERITANCE, new Concept[2] { mParent, this });
+                return;
+            }
+
             if (mdictProperties.ContainsKey(Field))
             {
                 mdictProperties[Field] = Value;

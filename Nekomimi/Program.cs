@@ -9,7 +9,7 @@ namespace Nekomimi
     {
         static void Main(string[] args)
         {
-            
+
 
         }
     }

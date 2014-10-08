@@ -7,22 +7,45 @@ namespace Nekomimi
 {
     static class Contradiction
     {
+        static public enum ERRCODE { DIRECT, INHERITANCE };
+
+
         /// <summary>
         /// Throw a Contradiction.
         /// </summary>
         /// <param name="obj"></param>
-        static public void Throw(object obj)
+        static public void Throw(ERRCODE err, object obj)
         {
-            // Conceptual Contradiction
-            //---------------------------------------- 
-            Concept[] pairs = obj as Concept[];
-
-            if ((object)pairs != null)
+            switch (err)
             {
-                // TODO
-            }
-            //----------------------------------------
+                case ERRCODE.DIRECT:
+                    // Conceptual Contradiction
+                    // e.g. Apple is red VS Apple is blue
+                    //---------------------------------------- 
+                    Concept[] pairs = obj as Concept[];
 
+                    if ((object)pairs != null)
+                    {
+                        // TODO
+                    }
+                    //----------------------------------------
+                    break;
+                case ERRCODE.INHERITANCE:
+                    // Inheritance Contradiction
+                    // e.g. Foo is an apple VS Foo is blue
+                    //---------------------------------------- 
+                    pairs = obj as Concept[];
+
+                    if ((object)pairs != null)
+                    {
+                        // TODO
+                    }
+                    //----------------------------------------
+                    break;
+                default:
+                    break;
+
+            }
         }
 
     }

@@ -12,8 +12,7 @@ namespace Nekomimi
             List<Concept> lConcept = ConceptBase.Extract(Source);
             List<Hypothesis<List<Concept>>> CurrentLevel = Hypothesis<List<Concept>>.Hypothesize(Utils.PowerSet(Utils.Order(lConcept, Source), Source), list =>
             {
-                return (double)Utils.Stringify(list).Length / (double)Source.Length;
-   
+                return (double)Utils.Stringify(list).Length / (double)Source.Length;   
             });
 
             List<Reaction> Reactions= new List<Reaction>();

@@ -11,11 +11,12 @@ namespace Nekomimi
         {
             ConceptBase.Load("concepts");
             RuleBase.Load("rules");
-            
 
-            CParser.Parse("xxxyxxxy");
+            while (true)
+            {
+                CParser.Parse(Console.ReadLine());
+            }
 
-            Console.Read();
 
         }
     }

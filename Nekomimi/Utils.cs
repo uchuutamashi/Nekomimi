@@ -161,6 +161,10 @@ namespace Nekomimi
                 {
                     inBrac = true;
                     level++;
+                    if (level == 1)
+                    {
+                        continue;
+                    }
                 }
                 if (c == rbrac)
                 {

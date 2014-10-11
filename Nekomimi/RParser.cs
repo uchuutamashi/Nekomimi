@@ -31,11 +31,11 @@ namespace Nekomimi
                     string num = Utils.LSplit(term, ".");
                     string prop = Utils.RSplit(term, ".");
 
-                    result.Replace("{" + term + "}", args[Convert.ToInt32(num)].GetProperty(prop));
+                    result= result.Replace("{" + term + "}", args[Convert.ToInt32(num)].GetProperty(prop));
                 }
                 else
                 {
-                    result.Replace("{" + term + "}", args[Convert.ToInt32(term)].Name);
+                    result=result.Replace("{" + term + "}", args[Convert.ToInt32(term)].Name);
                 }
 
             }

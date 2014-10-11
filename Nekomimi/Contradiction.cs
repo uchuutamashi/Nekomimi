@@ -7,7 +7,7 @@ namespace Nekomimi
 {
     static class Contradiction
     {
-        static public enum ERRCODE { DIRECT, INHERITANCE };
+        public enum ERRCODE { DIRECT, INHERITANCE };
 
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Nekomimi
             switch (err)
             {
                 case ERRCODE.DIRECT:
-                    // Conceptual Contradiction
+                    // Direct Contradiction
                     // e.g. Apple is red VS Apple is blue
                     //---------------------------------------- 
                     Concept[] pairs = obj as Concept[];

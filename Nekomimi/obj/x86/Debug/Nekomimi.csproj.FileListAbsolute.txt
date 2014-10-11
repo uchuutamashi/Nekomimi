@@ -3,3 +3,4 @@ C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\bin\Debug\Nekomimi.exe
 C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\bin\Debug\Nekomimi.pdb
 C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\obj\x86\Debug\Nekomimi.exe
 C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\obj\x86\Debug\Nekomimi.pdb
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\obj\x86\Debug\Nekomimi.csprojResolveAssemblyReference.cache

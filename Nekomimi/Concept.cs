@@ -28,6 +28,12 @@ namespace Nekomimi
             mName = Name;
         }
 
+        public Concept(string Name,string Type)
+        {
+            mName = Name;
+            SetProperty("TYPE", Type);
+        }
+
         /// <summary>
         /// Creates a new concept.
         /// </summary>
@@ -56,6 +62,11 @@ namespace Nekomimi
         public Concept GetParent()
         {
             return mParent;
+        }
+
+        public override string ToString()
+        {
+            return mName;
         }
 
         // Equalities

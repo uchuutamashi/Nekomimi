@@ -25,7 +25,7 @@ namespace Nekomimi
         {
             lock (cbMUTEX)
             {
-                foreach (string file in Directory.EnumerateFiles(DirectoryPath, "*.nc", SearchOption.AllDirectories))
+                foreach (string file in Directory.EnumerateFiles(DirectoryPath, "*.nmc", SearchOption.AllDirectories))
                 {
                     Add(Concept.FromFile(file));
                 }
@@ -112,7 +112,7 @@ namespace Nekomimi
         /// <param name="Property">Property</param>
         /// <param name="Value">Value</param>
         /// <returns>A List containing all the matching Concept(s).</returns>
-        static public List<Concept> FindProp(string Property, string Value)
+        static public List<Concept> Where(string Property, string Value)
         {
             lock (cbMUTEX)
             {
@@ -136,13 +136,16 @@ namespace Nekomimi
         /// <returns>A List of Concept(s) that is seen in Source</returns>
         static public List<Concept> Extract(string Source)
         {
+            string tmp;
             List<Concept> results = new List<Concept>();
 
             foreach (Concept c in mConcepts)
             {
-                if (Source.Contains(c.Name()))
+                tmp = Source;
+                while (tmp.Contains(c.Name()))
                 {
                     results.Add(c);
+                    tmp=Utils.ReplaceOnce(tmp,c.Name(),"");
                 }
             }
 

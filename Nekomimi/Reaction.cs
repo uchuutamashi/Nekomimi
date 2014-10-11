@@ -11,16 +11,28 @@ namespace Nekomimi
     /// </summary>
     class Reaction
     {
-        public Concept[] mReactants;
-        public Concept mProduct;
+        Concept[] mReactants;
+        Concept mProduct;
 
         public Reaction(Concept[] reactants, Concept prod)
         {
             mReactants = reactants;
             mProduct = prod;
-
         }
 
+        public Concept[] Reactants
+        {
+            get{
+            return mReactants;
+            }
+        }
 
+        public Concept Product
+        {
+            get
+            {
+                return mProduct;
+            }
+        }
     }
 }

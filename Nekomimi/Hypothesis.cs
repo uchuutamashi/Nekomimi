@@ -5,25 +5,43 @@ using System.Text;
 
 namespace Nekomimi
 {
-    class Hypothesis
+    class Hypothesis<T>
     {
-        string mClaim;
+        T mClaim;
         double mCertainty;
 
-        public Hypothesis(string claim, double certainty)
+        public Hypothesis(T claim, double certainty)
         {
             mClaim = claim;
             mCertainty = certainty;
         }       
 
-        public string Claim()
+        public T Claim
         {
-            return mClaim;
+            get
+            {
+                return mClaim;
+            }
         }
 
-        public double Certainty()
+        public double Certainty
         {
-            return mCertainty;
+            get
+            {
+                return mCertainty;
+            }
+        }
+
+        static public List<Hypothesis<T>> Hypothesize(List<T> list, Func<T,double> FCertainty)
+        {
+            List<Hypothesis<T>> results= new List<Hypothesis<T>>();
+            foreach (T t in list)
+            {
+                results.Add(new Hypothesis<T>(t, FCertainty(t)));
+            }
+
+            return results;
+
         }
     }
 }

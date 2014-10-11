@@ -40,7 +40,7 @@ namespace Nekomimi
         {
             lock (cbMUTEX)
             {
-                var tmp = Find(Object.Name(), Object.Type());
+                var tmp = Find(Object.Name, Object.Type);
                 if (tmp != null)
                 {
                     // Object has the same name-type combination with an existing Concept
@@ -71,7 +71,7 @@ namespace Nekomimi
             {
                 foreach (Concept c in mConcepts)
                 {
-                    if (c.Name() == Name)
+                    if (c.Name == Name)
                     {
                         return c;
                     }
@@ -94,7 +94,7 @@ namespace Nekomimi
             {
                 foreach (Concept c in mConcepts)
                 {
-                    if (c.Name() == Name && c.GetProperty("TYPE") == Type)
+                    if (c.Name == Name && c.GetProperty("TYPE") == Type)
                     {
                         return c;
                     }
@@ -142,10 +142,10 @@ namespace Nekomimi
             foreach (Concept c in mConcepts)
             {
                 tmp = Source;
-                while (tmp.Contains(c.Name()))
+                while (tmp.Contains(c.Name))
                 {
                     results.Add(c);
-                    tmp=Utils.ReplaceOnce(tmp,c.Name(),"");
+                    tmp=Utils.ReplaceOnce(tmp,c.Name,"");
                 }
             }
 

@@ -52,7 +52,7 @@ namespace Nekomimi
                         string name = Utils.LSplit(mPattern[i].Trim('{', '}'), ",");
                         string type = Utils.RSplit(mPattern[i].Trim('{', '}'), ",");
 
-                        if (list[i].Name() != name || list[i].Type() != type)
+                        if (list[i].Name != name || list[i].Type != type)
                         {
                             return false;
                         }
@@ -71,7 +71,7 @@ namespace Nekomimi
                     else
                     {
                         //SYNTAX 2
-                        if (list[i].Name() != mPattern[i].Trim('{', '}'))
+                        if (list[i].Name != mPattern[i].Trim('{', '}'))
                         {
                             return false;
                         }
@@ -80,7 +80,7 @@ namespace Nekomimi
                 else
                 {
                     //SYNTAX1
-                    if (list[i].Type() != mPattern[i] && mPattern[i]!="*")
+                    if (list[i].Type != mPattern[i] && mPattern[i]!="*")
                     {
                         return false;
                     }

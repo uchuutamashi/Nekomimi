@@ -35,7 +35,7 @@ namespace Nekomimi
                 }
                 else
                 {
-                    result.Replace("{" + term + "}", args[Convert.ToInt32(term)].Name());
+                    result.Replace("{" + term + "}", args[Convert.ToInt32(term)].Name);
                 }
 
             }

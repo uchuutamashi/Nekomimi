@@ -7,23 +7,27 @@ namespace Nekomimi
 {
     static class CParser
     {
-        public static List<Hypothesis> Parse(string Source)
+        public static List<Hypothesis<string>> Parse(string Source)
         {
-            List<Concept> lConcept = ConceptBase.Extract(Source);  
-            List<List<Concept>> CurrentLevel = Utils.PowerSet(Utils.Order(lConcept, Source),Source);
+            List<Concept> lConcept = ConceptBase.Extract(Source);
+            List<Hypothesis<List<Concept>>> CurrentLevel = Hypothesis<List<Concept>>.Hypothesize(Utils.PowerSet(Utils.Order(lConcept, Source), Source), list =>
+            {
+                return (double)Utils.Stringify(list).Length / (double)Source.Length;
+   
+            });
 
             List<Reaction> Reactions= new List<Reaction>();
-            List<List<Concept>> NextLevel= new List<List<Concept>>();
+            List<Hypothesis<List<Concept>>> NextLevel= new List<Hypothesis<List<Concept>>>();
 
             for(int i =0 ; i<50;i++)
             {
                 // Get all applicable rules and store the reactions for later use
                 Reactions.Clear();
-                foreach (List<Concept> list in CurrentLevel)
+                foreach (Hypothesis<List<Concept>> hyp in CurrentLevel)
                 {
-                    foreach (Rule r in RuleBase.FindApplicableRules(list))
+                    foreach (Rule r in RuleBase.FindApplicableRules(hyp.Claim))
                     {
-                        Reaction re = new Reaction(list.ToArray(), r.Apply(list));
+                        Reaction re = new Reaction(hyp.Claim.ToArray(), r.Apply(hyp.Claim));
                         if (!Reactions.Contains(re))
                         {
                             Reactions.Add(re);
@@ -32,11 +36,11 @@ namespace Nekomimi
                 }
 
                 NextLevel.Clear();
-                foreach (List<Concept> list in CurrentLevel)
+                foreach (Hypothesis<List<Concept>> hyp in CurrentLevel)
                 {
                     foreach (Reaction re in Reactions)
                     {
-                        NextLevel.Add(Utils.Substitute(list, re.mReactants, re.mProduct));
+                        NextLevel.Add(new Hypothesis<List<Concept>>(Utils.Substitute(hyp.Claim, re.Reactants, re.Product),hyp.Certainty));
                     }
                 }
 
@@ -46,21 +50,21 @@ namespace Nekomimi
                 }
                 else
                 {
-                    CurrentLevel = new List<List<Concept>>(NextLevel);
+                    CurrentLevel = new List<Hypothesis<List<Concept>>>(NextLevel);
                 }
                 
             }
 
             //DEBUG===========================================
             Rule ru = Rule.FromString("*+*,TESTTYPE,none");
-            foreach (List<Concept> list in CurrentLevel)
+            foreach (Hypothesis<List<Concept>> hyp in CurrentLevel)
             {
-                foreach (Concept c in list)
+                foreach (Concept c in hyp.Claim)
                 {
-                    Console.Write(c+" ");
+                    Console.Write(c + " ");
                 }
-                Console.WriteLine(">>> " + ru.IsMatch(list));
-                
+                Console.WriteLine(">>> " + hyp.Certainty);
+
                 Console.WriteLine();
             }
             //================================================

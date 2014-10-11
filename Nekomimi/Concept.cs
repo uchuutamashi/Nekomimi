@@ -44,19 +44,25 @@ namespace Nekomimi
             mParent = Parent;
         }
 
-        public string Name()
-        {           
-            return mName;
+        public string Name
+        {
+            get
+            {
+                return mName;
+            }
         }
 
-        public string Type()
+        public string Type
         {
-            string type= GetProperty("TYPE");
-            if (type != null)
+            get
             {
-                return type;
+                string type = GetProperty("TYPE");
+                if (type != null)
+                {
+                    return type;
+                }
+                return "NONE";
             }
-            return "NONE";
         }
 
         public Concept GetParent()

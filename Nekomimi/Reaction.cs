@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Nekomimi
 {
+
+    /// <summary>
+    /// A data structure that is used to temporarily store the reactant and result of a rule-application(reaction).
+    /// </summary>
     class Reaction
     {
         public Concept[] mReactants;

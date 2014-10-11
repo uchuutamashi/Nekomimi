@@ -59,6 +59,11 @@ namespace Nekomimi
             }
         }
 
+        /// <summary>
+        /// Find all applicable rules for a collection of Concepts
+        /// </summary>
+        /// <param name="list">The list of Concepts</param>
+        /// <returns>A list of Rules</returns>
         static public List<Rule> FindApplicableRules(List<Concept> list)
         {
             List<Rule> results = new List<Rule>();

@@ -13,7 +13,7 @@ namespace Nekomimi
             RuleBase.Load("rules");
             
 
-            CParser.Parse("xxxyxxxy1");
+            CParser.Parse("xxxyxxxy");
 
             Console.Read();
 

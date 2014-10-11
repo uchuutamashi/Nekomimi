@@ -126,8 +126,8 @@ namespace Nekomimi
             if (mdictProperties.ContainsKey(Field))
             {
                 return mdictProperties[Field];
-            }
-            else if (mParent != null)
+            }            
+            else if (mParent != null) //if the property can't be found, look for it at the parent's concept file
             {
                 return mParent.GetProperty(Field);
             }
@@ -141,13 +141,13 @@ namespace Nekomimi
         /// <param name="Value">Value</param>
         public void SetProperty(string Field,string Value)
         {
-            if (mParent!=null && mParent.GetProperty(Field) != Value)
+            if (mParent != null && mParent.GetProperty(Field) != Value)  //check for inheritance conflict
             {
                 Contradiction.Throw(Contradiction.ERRCODE.INHERITANCE, new Concept[2] { mParent, this });
                 return;
             }
 
-            if (mdictProperties.ContainsKey(Field))
+            if (mdictProperties.ContainsKey(Field)) 
             {
                 mdictProperties[Field] = Value;
             }

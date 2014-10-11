@@ -14,9 +14,7 @@ namespace Nekomimi
         {
             mClaim = claim;
             mCertainty = certainty;
-        }
-
-       
+        }       
 
         public string Claim()
         {

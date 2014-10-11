@@ -207,14 +207,30 @@ namespace Nekomimi
 
         }
 
+        /// <summary>
+        /// Replace all appearances of the series represented by reactant with the element product
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list">The list</param>
+        /// <param name="reactant">Series that has to be replaced</param>
+        /// <param name="product">Element to replace with</param>
+        /// <returns>Replaced list</returns>
         public static List<T> Substitute<T>(IEnumerable<T> list, IEnumerable<T> reactant, T product)
         {
             int currRectant = 0;
             bool matching = false;
             List<T> result= new List<T>();
+
+            //There are two pointers here, 
+            // i being the pointer into the list
+            // currReactant being the pointer into the reactant series
+
+            //Run through the list
             for (int i=0;i< list.Count();i++)
             {
-                
+                //If the two pointers match
+                //Set the flag to be true
+                //And move the pointer in the reactant
                 if (list.ElementAt(i).Equals(reactant.ElementAt(currRectant)))
                 {
                     matching = true;
@@ -226,23 +242,47 @@ namespace Nekomimi
                         matching = false;
                     }
                 }
+                //If the two pointers do not match
                 else
                 {
+                    //The first situation will be that we the two pointers were matching
+                    //The current unmatch breaks the match
+                    //We add back previously skipped elements
+                    //And keep the pointer at the same place (by i-- and i++ in the for loop)
+                    //  because the current list pointer can be the begining of a new match
                     if (matching)
                     {
                         matching = false;
                         // add back the skipped elements
-                        for (; currRectant > 0; currRectant--)
+                        if (currRectant > 0)
                         {
-                            result.Add(list.ElementAt(i - currRectant));
+                            for (; currRectant > 0; currRectant--)
+                            {
+                                result.Add(list.ElementAt(i - currRectant));
+                            }
                         }
-
+                        currRectant = 0;
+                        i--;
                     }
-                    result.Add(list.ElementAt(i));
+                    else
+                    {
+                        result.Add(list.ElementAt(i));
+                    }
+                }
+            }
+
+            // add back the skipped elements
+            if (currRectant > 0)
+            {
+                for (; currRectant > 0; currRectant--)
+                {
+                    result.Add(list.ElementAt(list.Count() - currRectant));
                 }
             }
 
             return result;
         }
+
+
     }
 }

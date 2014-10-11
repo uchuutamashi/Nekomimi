@@ -7,7 +7,7 @@ namespace Nekomimi
 {
     static class Contradiction
     {
-        public enum ERRCODE { DIRECT, INHERITANCE };
+        public enum ERRCODE { DIRECT, INHERITANCE, RULE };
 
 
         /// <summary>
@@ -40,6 +40,15 @@ namespace Nekomimi
                     {
                         // TODO
                     }
+                    //----------------------------------------
+                    break;
+                case ERRCODE.RULE:
+                    // Rule Contradiction
+                    // e.g. VERB+NOUN=VP , VERB+NOUN=NOUN
+                    //---------------------------------------- 
+                  
+
+
                     //----------------------------------------
                     break;
                 default:

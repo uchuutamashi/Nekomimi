@@ -10,6 +10,8 @@ namespace Nekomimi
         static void Main(string[] args)
         {
             ConceptBase.Load("concepts");
+            
+            
 
             CParser.Parse("xxy1xy");
 

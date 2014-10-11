@@ -181,6 +181,19 @@ namespace Nekomimi
             return result;
         }
 
+        public static string Stringify<T>(IEnumerable<T> list, char sep )
+        {
+            string result = "";
+
+            foreach (T t in list)
+            {
+                result += t.ToString()+sep;
+            }
+
+            return result.TrimEnd(sep);
+
+        }
+
         public static string Stringify<T>(IEnumerable<T> list)
         {
             string result = "";

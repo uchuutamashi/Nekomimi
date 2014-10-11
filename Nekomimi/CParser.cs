@@ -9,21 +9,23 @@ namespace Nekomimi
     {
         public static List<Hypothesis> Parse(string Source)
         {
-            List<Concept> lConcept = ConceptBase.Extract(Source);
-
-            
-
+            List<Concept> lConcept = ConceptBase.Extract(Source);  
             List<List<Concept>> BigTable = Utils.PowerSet(Utils.Order(lConcept, Source),Source);
 
 
+
+            //DEBUG===========================================
+            Rule r = Rule.FromString("*+*,TESTTYPE,none");
             foreach (List<Concept> list in BigTable)
             {
                 foreach (Concept c in list)
                 {
                     Console.Write(c+" ");
                 }
+                Console.WriteLine(">>> " + r.IsMatch(list));
                 Console.WriteLine();
             }
+            //================================================
 
             return null;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Nekomimi
 {
@@ -40,14 +41,13 @@ namespace Nekomimi
         {
             lock (rbMUTEX)
             {
-                var tmp = Find(Object.Name(), Object.Type());
+                var tmp = Find(Object.GetProdType());
                 if (tmp != null)
                 {
-                    // Object has the same name-type combination with an existing Rule
-                    // Hence there is a direct contradiction
+                    // Object has the same pattern with an existing Rule                    
                     if (tmp != Object)
                     {
-                        Contradiction.Throw(Contradiction.ERRCODE.DIRECT, new Rule[2] { Object, tmp });
+                        Contradiction.Throw(Contradiction.ERRCODE.RULE, new Rule[2] { Object, tmp });
                         return;
                     }
                 }
@@ -59,21 +59,35 @@ namespace Nekomimi
             }
         }
 
+        static public List<Rule> FindApplicableRules(List<Concept> list)
+        {
+            List<Rule> results = new List<Rule>();
+            Parallel.ForEach(mRules, r =>
+            {
+                if (r.IsMatch(list))
+                {
+                    results.Add(r);
+                }
+            });
+
+            return results;
+        }
+
         /// <summary>
         /// Find Rule in RuleBase by Name
         /// e.g. Find("Apple")
         /// </summary>
         /// <param name="Name">Name</param>
         /// <returns>The first occurance of Rule that has the specified name. If none is found, a null object is returned.</returns>
-        static public Rule Find(string Name)
+        static public Rule Find(string ProdType)
         {
             lock (rbMUTEX)
             {
-                foreach (Rule c in mRules)
+                foreach (Rule r in mRules)
                 {
-                    if (c.Name() == Name)
+                    if (r.GetProdType()==ProdType)
                     {
-                        return c;
+                        return r;
                     }
                 }
 
@@ -81,27 +95,6 @@ namespace Nekomimi
             }
         }
 
-        /// <summary>
-        /// Find Rule in RuleBase by Name-Type combination
-        /// e.g. Find("Apple", "Fruit")
-        /// </summary>
-        /// <param name="Name">Name</param>
-        /// <param name="Type">Type</param>
-        /// <returns>The Rule that has the specified Name-Type combination. If none is found, a null object is returned.</returns>
-        static public Rule Find(string Name, string Type)
-        {
-            lock (rbMUTEX)
-            {
-                foreach (Rule c in mRules)
-                {
-                    if (c.Name() == Name && c.GetProperty("TYPE") == Type)
-                    {
-                        return c;
-                    }
-                }
-
-                return null;
-            }
-        }
+       
     }
 }

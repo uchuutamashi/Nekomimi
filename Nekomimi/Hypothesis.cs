@@ -16,6 +16,8 @@ namespace Nekomimi
             mCertainty = certainty;
         }
 
+       
+
         public string Claim()
         {
             return mClaim;

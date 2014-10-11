@@ -10,10 +10,10 @@ namespace Nekomimi
         static void Main(string[] args)
         {
             ConceptBase.Load("concepts");
-            
+            RuleBase.Load("rules");
             
 
-            CParser.Parse("xxy1xy");
+            CParser.Parse("xxxyxxxy1");
 
             Console.Read();
 

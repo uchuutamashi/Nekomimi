@@ -141,7 +141,7 @@ namespace Nekomimi
         /// <param name="Value">Value</param>
         public void SetProperty(string Field,string Value)
         {
-            if (mParent.GetProperty(Field) != Value)
+            if (mParent!=null && mParent.GetProperty(Field) != Value)
             {
                 Contradiction.Throw(Contradiction.ERRCODE.INHERITANCE, new Concept[2] { mParent, this });
                 return;

@@ -206,5 +206,43 @@ namespace Nekomimi
             return result;
 
         }
+
+        public static List<T> Substitute<T>(IEnumerable<T> list, IEnumerable<T> reactant, T product)
+        {
+            int currRectant = 0;
+            bool matching = false;
+            List<T> result= new List<T>();
+            for (int i=0;i< list.Count();i++)
+            {
+                
+                if (list.ElementAt(i).Equals(reactant.ElementAt(currRectant)))
+                {
+                    matching = true;
+                    currRectant++;
+                    if (currRectant == reactant.Count())
+                    {
+                        result.Add(product);
+                        currRectant = 0;
+                        matching = false;
+                    }
+                }
+                else
+                {
+                    if (matching)
+                    {
+                        matching = false;
+                        // add back the skipped elements
+                        for (; currRectant > 0; currRectant--)
+                        {
+                            result.Add(list.ElementAt(i - currRectant));
+                        }
+
+                    }
+                    result.Add(list.ElementAt(i));
+                }
+            }
+
+            return result;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Nekomimi
 {
@@ -136,21 +137,25 @@ namespace Nekomimi
         /// <returns>A List of Concept(s) that is seen in Source</returns>
         static public List<Concept> Extract(string Source)
         {
-            string tmp;
+            
             string remaining = Source;
             List<Concept> results = new List<Concept>();
 
-            foreach (Concept c in mConcepts)
+            Parallel.ForEach(mConcepts, c =>
             {
-                tmp = Source;
+                string tmp = Source;
                 while (tmp.Contains(c.Name))
                 {
                     results.Add(c);
-                    tmp=Utils.ReplaceOnce(tmp,c.Name,"");
-
-                    //for unknown extraction
-                    remaining = Utils.ReplaceOnce(remaining, c.Name, " ");
+                    tmp = Utils.ReplaceOnce(tmp, c.Name, "");
                 }
+            });
+
+
+            foreach (Concept c in results)
+            {
+                //for unknown extraction
+                remaining = Utils.ReplaceOnce(remaining, c.Name, " ");
             }
 
             foreach (string s in remaining.Split(new char[1]{' '}, StringSplitOptions.RemoveEmptyEntries))

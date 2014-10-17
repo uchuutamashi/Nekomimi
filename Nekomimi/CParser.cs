@@ -10,8 +10,7 @@ namespace Nekomimi
         public static List<Hypothesis<List<Concept>>> Parse(string Source)
         {
             List<Concept> lConcept = ConceptBase.Extract(Source);
-            //DEBUG
-            lConcept.Add(new Concept("xy","NODETYPE"));
+            
             List<Hypothesis<List<Concept>>> CurrentLevel = Hypothesis<List<Concept>>.Hypothesize(Utils.PowerSet(USieve.Filter(Utils.Order(lConcept, Source)), Source), list =>
             {
                 return (double)Utils.Stringify(list).Length / (double)Source.Length;   

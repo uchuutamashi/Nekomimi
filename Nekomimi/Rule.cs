@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Nekomimi
 {
+
     class Rule
     {
         string[] mPattern;
@@ -27,7 +28,7 @@ namespace Nekomimi
             return new Rule(pattern, prod, iform);            
         }
 
-        public string GetProdType()
+        public string GetPattern()
         {
             return Utils.Stringify(mPattern, '+');
         }

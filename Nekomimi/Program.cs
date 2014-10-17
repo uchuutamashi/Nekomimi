@@ -16,8 +16,6 @@ namespace Nekomimi
             {
                 CParser.Parse(Console.ReadLine());
             }
-
-
         }
     }
 }

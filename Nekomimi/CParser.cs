@@ -7,10 +7,12 @@ namespace Nekomimi
 {
     static class CParser
     {
-        public static List<Hypothesis<string>> Parse(string Source)
+        public static List<Hypothesis<List<Concept>>> Parse(string Source)
         {
             List<Concept> lConcept = ConceptBase.Extract(Source);
-            List<Hypothesis<List<Concept>>> CurrentLevel = Hypothesis<List<Concept>>.Hypothesize(Utils.PowerSet(Utils.Order(lConcept, Source), Source), list =>
+            //DEBUG
+            lConcept.Add(new Concept("xy","NODETYPE"));
+            List<Hypothesis<List<Concept>>> CurrentLevel = Hypothesis<List<Concept>>.Hypothesize(Utils.PowerSet(USieve.Filter(Utils.Order(lConcept, Source)), Source), list =>
             {
                 return (double)Utils.Stringify(list).Length / (double)Source.Length;   
             });
@@ -39,7 +41,10 @@ namespace Nekomimi
                 {
                     foreach (Reaction re in Reactions)
                     {
-                        NextLevel.Add(new Hypothesis<List<Concept>>(Utils.Substitute(hyp.Claim, re.Reactants, re.Product),hyp.Certainty));
+                        if (!Utils.Identical(Utils.Substitute(hyp.Claim, re.Reactants, re.Product), hyp.Claim))
+                        {
+                            NextLevel.Add(new Hypothesis<List<Concept>>(Utils.Substitute(hyp.Claim, re.Reactants, re.Product), hyp.Certainty));
+                        }
                     }
                 }
 
@@ -55,7 +60,7 @@ namespace Nekomimi
             }
 
             //DEBUG===========================================
-            Rule ru = Rule.FromString("*+*,TESTTYPE,none");
+            //Rule ru = Rule.FromString("*+*,TESTTYPE,none");
             foreach (Hypothesis<List<Concept>> hyp in CurrentLevel)
             {
                 foreach (Concept c in hyp.Claim)
@@ -68,7 +73,7 @@ namespace Nekomimi
             }
             //================================================
 
-            return null;
+            return CurrentLevel;
         }
 
     }

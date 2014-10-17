@@ -41,7 +41,7 @@ namespace Nekomimi
         {
             lock (rbMUTEX)
             {
-                var tmp = Find(Object.GetProdType());
+                var tmp = Find(Object.GetPattern());
                 if (tmp != null)
                 {
                     // Object has the same pattern with an existing Rule                    
@@ -79,24 +79,39 @@ namespace Nekomimi
         }
 
         /// <summary>
-        /// Find Rule in RuleBase by Name
-        /// e.g. Find("Apple")
+        /// Find Rule in RuleBase by Pattern
+        /// e.g. Find("VERB+NOUN")
         /// </summary>
-        /// <param name="Name">Name</param>
-        /// <returns>The first occurance of Rule that has the specified name. If none is found, a null object is returned.</returns>
-        static public Rule Find(string ProdType)
+        /// <param name="Pattern">Pattern</param>
+        /// <returns>The first occurance of Rule that has the specified pattern. If none is found, a null object is returned.</returns>
+        static public Rule Find(string Pattern)
         {
             lock (rbMUTEX)
             {
                 foreach (Rule r in mRules)
                 {
-                    if (r.GetProdType()==ProdType)
+                    if (r.GetPattern()==Pattern)
                     {
                         return r;
                     }
                 }
 
                 return null;
+            }
+        }
+
+        static public void Remove(string Pattern)
+        {
+            lock (rbMUTEX)
+            {
+                foreach (Rule r in mRules)
+                {
+                    if (r.GetPattern() == Pattern)
+                    {
+                        mRules.Remove(r);
+                        break;
+                    }
+                }
             }
         }
 

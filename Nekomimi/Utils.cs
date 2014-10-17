@@ -71,7 +71,13 @@ namespace Nekomimi
             }
             return false;
         }
-
+        /// <summary>
+        /// Ordering procedure
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public static List<T> Order<T>(IEnumerable<T> list, string order)
         {
             T[] results = list.ToArray();
@@ -94,7 +100,7 @@ namespace Nekomimi
                 }
             }
 
-            Array.Sort( index.ToArray(),results);
+            Array.Sort(index.ToArray(), results);
 
             return results.ToList();
 
@@ -123,7 +129,7 @@ namespace Nekomimi
                 tmp = constraint;
                 match = true;
                 foreach (T t in combination)
-                {                    
+                {
                     if (!tmp.Contains(t.ToString()))
                     {
                         match = false;
@@ -140,7 +146,7 @@ namespace Nekomimi
             //Remove repeated elements
             foreach (List<T> ls in results.ToArray())
             {
-                results.RemoveAll(x => Utils.Stringify(x) == Utils.Stringify(ls));
+                results.RemoveAll(x => Utils.Identical(x,ls));
                 results.Add(ls);
             }
 
@@ -148,11 +154,17 @@ namespace Nekomimi
             return results;
         }
 
-
+        /// <summary>
+        /// Extract content in innermost brackets
+        /// i.e. 0 is extracted from {1{0}}
+        /// </summary>
+        /// <param name="Source"></param>
+        /// <param name="lbrac"></param>
+        /// <param name="rbrac"></param>
+        /// <returns>Return null if not found</returns>
         public static List<string> ExtractFromBracket(string Source, char lbrac = '{', char rbrac = '}')
         {
             bool inBrac = false;
-            int level = 0;
             string content = "";
             List<string> result = new List<string>();
             foreach (char c in Source)
@@ -160,16 +172,12 @@ namespace Nekomimi
                 if (c == lbrac)
                 {
                     inBrac = true;
-                    level++;
-                    if (level == 1)
-                    {
-                        continue;
-                    }
+
+                    continue;
                 }
                 if (c == rbrac)
                 {
-                    level--;
-                    if (level == 0 && inBrac)
+                    if (inBrac)
                     {
                         inBrac = false;
                         result.Add(content);
@@ -181,17 +189,17 @@ namespace Nekomimi
                     content += c;
                 }
             }
-
+            if (result.Count() == 0) { return null; }
             return result;
         }
 
-        public static string Stringify<T>(IEnumerable<T> list, char sep )
+        public static string Stringify<T>(IEnumerable<T> list, char sep)
         {
             string result = "";
 
             foreach (T t in list)
             {
-                result += t.ToString()+sep;
+                result += t.ToString() + sep;
             }
 
             return result.TrimEnd(sep);
@@ -223,14 +231,14 @@ namespace Nekomimi
         {
             int currRectant = 0;
             bool matching = false;
-            List<T> result= new List<T>();
+            List<T> result = new List<T>();
 
             //There are two pointers here, 
             // i being the pointer into the list
             // currReactant being the pointer into the reactant series
 
             //Run through the list
-            for (int i=0;i< list.Count();i++)
+            for (int i = 0; i < list.Count(); i++)
             {
                 //If the two pointers match
                 //Set the flag to be true
@@ -241,7 +249,9 @@ namespace Nekomimi
                     currRectant++;
                     if (currRectant == reactant.Count())
                     {
+
                         result.Add(product);
+
                         currRectant = 0;
                         matching = false;
                     }

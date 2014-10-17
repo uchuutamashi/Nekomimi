@@ -60,7 +60,7 @@ namespace Nekomimi
         }
 
         /// <summary>
-        /// Find Concept in ConceptBase by Name
+        /// Find Concept in ConceptBase by Name. Null returned if not found
         /// e.g. Find("Apple")
         /// </summary>
         /// <param name="Name">Name</param>
@@ -82,7 +82,7 @@ namespace Nekomimi
         }
 
         /// <summary>
-        /// Find Concept in ConceptBase by Name-Type combination
+        /// Find Concept in ConceptBase by Name-Type combination. Null returned if not found.
         /// e.g. Find("Apple", "Fruit")
         /// </summary>
         /// <param name="Name">Name</param>
@@ -107,7 +107,7 @@ namespace Nekomimi
 
         /// <summary>
         /// Find Concept(s) in ConceptBase that has the specified value for the specified property.
-        /// e.g. Find("Color","Red")
+        /// e.g. Where("Color","Red")
         /// </summary>
         /// <param name="Property">Property</param>
         /// <param name="Value">Value</param>
@@ -132,11 +132,12 @@ namespace Nekomimi
         /// <summary>
         /// Extract all Concept(s) that can be found in a string. Note that extraction is not parsing so it is non-exclusive and there may be overlapping. 
         /// </summary>
-        /// <param name="Source">string to extract from</param>
+        /// <param name="Source">string to extract from</param> 
         /// <returns>A List of Concept(s) that is seen in Source</returns>
         static public List<Concept> Extract(string Source)
         {
             string tmp;
+            string remaining = Source;
             List<Concept> results = new List<Concept>();
 
             foreach (Concept c in mConcepts)
@@ -146,7 +147,15 @@ namespace Nekomimi
                 {
                     results.Add(c);
                     tmp=Utils.ReplaceOnce(tmp,c.Name,"");
+
+                    //for unknown extraction
+                    remaining = Utils.ReplaceOnce(remaining, c.Name, " ");
                 }
+            }
+
+            foreach (string s in remaining.Split(new char[1]{' '}, StringSplitOptions.RemoveEmptyEntries))
+            {
+                results.Add(new Concept(s, "UNKNOWN"));
             }
 
             return results;

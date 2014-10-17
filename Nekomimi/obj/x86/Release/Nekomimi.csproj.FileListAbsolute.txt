@@ -1,0 +1,6 @@
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\bin\Release\Nekomimi.exe.config
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\bin\Release\Nekomimi.exe
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\bin\Release\Nekomimi.pdb
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\obj\x86\Release\Nekomimi.csprojResolveAssemblyReference.cache
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\obj\x86\Release\Nekomimi.exe
+C:\Users\ytc\Documents\GitHub\Nekomimi\Nekomimi\obj\x86\Release\Nekomimi.pdb

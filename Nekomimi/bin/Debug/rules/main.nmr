@@ -1,1 +1,1 @@
-﻿*+{is}+*,KNOWLEDGE,{0}.{1.TYPE}={1}
+﻿*+{is}+*,KNOWLEDGE,{0}.{{1.TYPE}}={1}

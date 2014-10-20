@@ -1,6 +1,8 @@
 Nekomimi
 ========
 
+(after some preliminary testing this idea does not seem to work. development is suspended)
+
 Prototype concept-level rule-driven restricted language understanding machine
 
 Concept-level : The machine breaks down input into concepts. A concept is a small data structure with a name, type and various other properties

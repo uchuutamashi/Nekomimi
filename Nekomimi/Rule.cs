@@ -81,7 +81,12 @@ namespace Nekomimi
                 else
                 {
                     //SYNTAX1
-                    if (list[i].Type != mPattern[i] && mPattern[i]!="*")
+                    bool tmp = false;
+                    foreach (string type in list[i].Type.Split(','))
+                    {
+                        tmp = tmp | (type == mPattern[i]);
+                    }
+                    if (!tmp && mPattern[i] != "*")
                     {
                         return false;
                     }

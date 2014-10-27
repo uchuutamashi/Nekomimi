@@ -28,20 +28,22 @@ namespace Nekomimi
             mName = Name;
         }
 
-        public Concept(string Name,string Type)
+        public Concept(string Name, string Type)
         {
             mName = Name;
             SetProperty("TYPE", Type);
         }
 
-        /// <summary>
-        /// Creates a new concept.
-        /// </summary>
-        /// <param name="Name">The external name of the concept. External name is the term that is used to refer to this concept in the input.</param>
-        /// <param name="Parent">Parent Concept to inherit from</param>
-        public Concept(string Name,Concept Parent)
+        public Concept Parent
         {
-            mParent = Parent;
+            get
+            {
+                return mParent;
+            }
+            set
+            {
+                mParent = Parent;
+            }
         }
 
         public string Name
@@ -63,11 +65,6 @@ namespace Nekomimi
                 }
                 return "NONE";
             }
-        }
-
-        public Concept GetParent()
-        {
-            return mParent;
         }
 
         public override string ToString()
@@ -117,6 +114,11 @@ namespace Nekomimi
             foreach (string line in File.ReadAllLines(FilePath, Encoding.UTF8))
             {
                 c.SetProperty(Utils.LSplit(line, "="), Utils.RSplit(line, "="));
+            }
+
+            if (c.GetProperty("PARENT") != null)
+            {
+                c.Parent = ConceptBase.Find(c.GetProperty("PARENT"));
             }
 
             return c;

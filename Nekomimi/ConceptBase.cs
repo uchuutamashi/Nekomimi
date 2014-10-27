@@ -27,7 +27,7 @@ namespace Nekomimi
             lock (cbMUTEX)
             {
                 foreach (string file in Directory.EnumerateFiles(DirectoryPath, "*.nmc", SearchOption.AllDirectories))
-                {
+                {                    
                     Add(Concept.FromFile(file));
                 }
             }

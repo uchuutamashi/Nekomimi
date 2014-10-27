@@ -11,7 +11,8 @@ namespace Nekomimi
     {
         static public List<Concept> Filter(List<Concept> list)
         {
-
+            //RuleBase sequential match
+            //find difference
 
             return list;
         }
